@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=Utf-8">
+</head>
+<body onload="document.getElementById('from').submit();">
+<!-- <body> -->
+<form id="from" action="https://gateway.95516.com/gateway/api/frontTransReq.do" method="post">
+<!-- <form id="from" action="https://101.231.204.80:5000/gateway/api/frontTransReq.d" method="post"> -->
+<input type="hidden" name="version" id="version" value="{{version}}"/>
+<input type="hidden" name="encoding" id="encoding" value="{{encoding}}"/>
+<input type="hidden" name="certId" id="certId" value="{{certId}}"/>
+<input type="hidden" name="signature" id="signature" value="{{signature}}"/>
+<input type="hidden" name="signMethod" id="signMethod" value="{{signMethod}}"/>
+<input type="hidden" name="txnType" id="txnType" value="{{txnType}}"/>
+<input type="hidden" name="txnSubType" id="txnSubType" value="{{txnSubType}}"/>
+<input type="hidden" name="bizType" id="bizType" value="{{bizType}}"/>
+<input type="hidden" name="channelType" id="channelType" value="{{channelType}}"/>
+<input type="hidden" name="frontUrl" id="frontUrl" value="{{frontUrl}}"/>
+<input type="hidden" name="backUrl" id="backUrl" value="{{backUrl}}"/>
+<input type="hidden" name="accessType" id="accessType" value="{{accessType}}"/>
+<input type="hidden" name="txnAmt" id="txnAmt" value="{{txnAmt}}"/>
+<input type="hidden" name="termId" id="termId" value="{{termId}}"/>
+<input type="hidden" name="merId" id="merId" value="{{merId}}"/>
+<input type="hidden" name="orderId" id="orderId" value="{{orderId}}"/>
+{% if issInsCode != "" %}
+<input type="hidden" name="issInsCode" id="issInsCode" value="{{issInsCode}}"/>
+{% endif %}
+<input type="hidden" name="txnTime" id="txnTime" value="{{txnTime}}"/>
+<input type="hidden" name="currencyCode" id="currencyCode" value="{{currencyCode}}"/>
+<input type="hidden" name="reqReserved" id="reqReserved" value="{{reqReserved}}"/>
+{% if accNo != "" %}
+<input type="hidden" name="accNo" id="accNo" value="{{accNo}}"/>
+{% endif %}
+<input type="hidden" name="reserved" id="reserved" value="{{reserved}}"/>
+<input type="hidden" name="defaultPayType" id="defaultPayType" value="{{defaultPayType}}"/>
+<!-- <input type="submit" value="提交"> -->
+</form>
+
+</body>
+</html>

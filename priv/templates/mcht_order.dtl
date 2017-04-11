@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+</head>
+
+<body>
+    <form id="pay" action="{{ actionUrl }}" target="_blank" method="post">
+        交易金额:<input type="text" name="tranAmt" value="{{ tranAmt}}"/><br>
+        订单描述:<input type="text" name="orderDesc" value="{{ orderDesc }}"/><br>
+        <!--
+        订单号:<input type="text" name="orderId" value="{{ orderId}}"/><br>
+        -->
+        商户号:
+        <select name="merchId">
+            <option value="00001">信托网-pc</option>
+            <option value="00002">信托网-手机</option>
+            <option value="00003">聚信托-pc</option>
+            <option value="00004">聚信托-手机</option>
+            <option value="00005">民生-pc</option>
+            <option value="00006">民生-手机</option>
+            <option value="00007">中金支付-pc</option>
+            <option value="00008">润孚科技-pc</option>
+            <option value="00009">润孚科技-手机</option>
+            <option value="90001">测试商户1</option>
+            <option value="90002">测试商户2</option>
+            <option value="88888">不存在的商户</option>
+            <option value="">空商户号</option>
+        </select><br>
+        商户流水号:<input type="text" name="tranId" value="{{ tranId }}"/><br>
+        银行卡号:<input type="text" name="bankCardNo" value="{{ bankCardNo }}"/><br>
+        产品代码:<input type="text" name="prodId" value="{{ prodId }}"/><br>
+        交易日期:<input type="text" name="tranDate" value="{{ tranDate }}"/><br>
+        交易时间:<input type="text" name="tranTime" value="{{ tranTime }}"/><br>
+        打款账号:<input type="text" name="accountId" value="{{ accountId }}"/><br>
+        打款户名:<input type="text" name="accountName" value="{{ accountName }}"/><br>
+        打款银行:<input type="text" name="accountBank" value="{{ accountBank }}"/><br>
+        签名:<input type="text" name="signature" value="{{ signature }}"/><br>
+        网关类型:
+        <select name="gateWayId">
+            <option value="1003">对应支付方式:手机wap无卡支付</option>
+            <option value="1002">对应支付方式:网银+无卡支付</option>
+        </select><br>
+        银行:
+        <select name="bankId">
+            <option value="">-</option>
+            <!--
+            这下面是对应的标准网关银行列表 -- 同时支持借记卡和贷记卡
+            -->
+            <option value="ICBC">工商银行</option>
+            <option value="ABC">农业银行</option>
+            <option value="BOC">中国银行(大额)</option>
+            <option value="BOCSH">中国银行</option>
+            <option value="CCB">建设银行</option>
+            <option value="CMB">招商银行</option>
+            <option value="SPDB">浦发银行</option>
+            <option value="GDB">广发银行</option>
+            <option value="BOCOM">交通银行</option>
+            <option value="CMBC">民生银行</option>
+            <option value="CEB">光大银行</option>
+            <option value="HXB">华夏银行</option>
+            <option value="BOS">上海银行</option>
+            <option value="SRCB">上海农商银行</option>
+            <option value="PSBC">邮政储蓄银行</option>
+            <option value="BOCOMD">交通银行</option>
+            <option value="CIB">兴业银行</option>
+            <option value="BCCB">北京银行-老</option>
+            <option value="BRCB">北京农商银行</option>
+            <option value="PAB">平安银行</option>
+            <!--
+            这下面是对应的支持的独立借记卡网关银行列表,适用于银联商户号仅支持借记卡的情况
+            <option value="ICBCD">工商银行</option>
+            <option value="ABCD">农业银行</option>
+            <option value="CCBD">建设银行</option>
+            <option value="CMBD">招商银行</option>
+            <option value="SPDBD">浦发银行</option>
+            <option value="GDBD">广发银行</option>
+            <option value="CMBCD">民生银行</option>
+            <option value="CEBD">光大银行</option>
+            <option value="HXBD">华夏银行</option>
+            <option value="PSBCD">邮政储蓄银行</option>
+            <option value="BOEAD">东亚银行</option>
+            <option value="BOCOMD">交通银行</option>
+            <option value="CIBD">兴业银行</option>
+            <option value="CCB">建设银行-老</option>
+            -->
+        </select>
+        <br>
+
+        支付成功前台跳转地址:<input type="text" name="trustFrontUrl" value="{{ trustFrontUrl }}" /><br>
+        支付成功后台通知地址:<input type="text" name="trustBackUrl" value="{{ trustBackUrl }}"/><br>
+
+        <input type="submit" value="提交支付">
+    </form>
+</body>
+
+</html>

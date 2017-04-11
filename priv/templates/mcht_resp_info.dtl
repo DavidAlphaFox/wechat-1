@@ -1,0 +1,11 @@
+[
+    {<<"merchId">>,{{mcht_id}} }
+    ,{<<"tranDate">>, {{ mcht_txn_date }} }
+    ,{ <<"tranId">>, {{ mcht_txn_seq }} }
+    ,{ <<"queryId">>, {{ query_id }} }
+    ,{ <<"settleDate">>, {{ settle_date }} }
+    ,{ <<"quota" >>, {{ quota }} }
+    ,{ <<"respCode">>, {{ resp_code}} }
+    ,{ <<"respMsg">> , {{ resp_msg }} }
+    ,{ <<"signature">>, {{ signature }} }
+].

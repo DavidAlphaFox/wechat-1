@@ -1,0 +1,9 @@
+<html>
+<body>
+{% for key in qs %}
+{{key }} <br>
+{% endfor %}
+<br>
+
+</body>
+</html>

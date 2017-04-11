@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=Utf-8">
+</head>
+<body onload="document.getElementById('from').submit();">
+<!--
+<body>
+-->
+<form id="from" action="{{mcht_front_url}}" method="post">
+<input type="hidden" name="merchId" id="merchId" value="{{mcht_id}}"/>
+<input type="hidden" name="tranDate" id="tranDate" value="{{mcht_txn_date}}"/>
+<input type="hidden" name="tranId" id="tranId" value="{{mcht_txn_seq}}"/>
+<input type="hidden" name="queryId" id="queryId" value="{{query_id}}"/>
+<input type="hidden" name="settleDate" id="settleDate" value="{{settle_date}}"/>
+<input type="hidden" name="quota" id="quota" value="{{quota}}"/>
+<input type="hidden" name="respCode" id="respCode" value="{{resp_code}}"/>
+<input type="hidden" name="respMsg" id="respMsg" value="{{resp_msg}}"/>
+<input type="hidden" name="signature" id="signature" value="{{signature}}"/>
+<!--
+<input type="submit" value="提交">
+-->
+</form>
+
+</body>
+</html>

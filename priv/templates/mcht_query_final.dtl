@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+</head>
+
+<body>
+    <form id="query" action="{{ actionUrl }}" target="_blank" method="post">
+        商户号:
+        <select name="merchId">
+            <option value="00001">信托网</option>
+            <option value="90001">测试商户1</option>
+            <option value="90002">测试商户2</option>
+            <option value="">空商户号</option>
+        </select><br>
+        交易日期:<input type="text" name="tranDate" value="{{ mcht_txn_date }}"/><br>
+        商户流水号:<input type="text" name="tranId" value="{{ mcht_txn_seq }}"/><br>
+        交易时间:<input type="text" name="tranTime" value="{{ mcht_txn_time }}"/><br>
+
+        原交易日期: <input type="text" name="origTranDate" value = "{{ orig_mcht_txn_date }}"/><br>
+        原交易流水号: <input type="text" name="origTranId" value = "{{ orig_mcht_txn_seq }}"/><br>
+        原交易查询流水号: <input type="text" name="queryId" value = "{{ query_id }}"/><br>
+
+        签名:<input type="text" name="signature" value = "{{signature}}"/><br>
+
+
+        <input type="submit" value="提交支付">
+    </form>
+    <br>请求的签名串: [ {{ signString }} ] <br>
+</body>
+
+</html>

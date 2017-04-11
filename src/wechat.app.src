@@ -1,0 +1,21 @@
+{application, wechat,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { wechat_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    jsx,
+    cowboy,
+    lager,
+    erlydtl,
+    xfutils
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.

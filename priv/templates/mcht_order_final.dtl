@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+</head>
+
+<body>
+    <form id="pay" action="{{ actionUrl }}" target="_blank" method="post">
+        交易金额:<input type="text" name="tranAmt" value="{{ tranAmt}}"/><br>
+        订单描述:<input type="text" name="orderDesc" value="{{ orderDesc }}"/><br>
+        <!--
+        订单号:<input type="text" name="orderId" value="{{ orderId}}"/><br>
+        -->
+        商户号:<input type="text" name="merchId" value="{{ merchId}}"/><br>
+        商户流水号:<input type="text" name="tranId" value="{{ tranId }}"/><br>
+        银行卡号:<input type="text" name="bankCardNo" value="{{ bankCardNo }}"/><br>
+        产品代码:<input type="text" name="prodId" value="{{ prodId }}"/><br>
+        交易日期:<input type="text" name="tranDate" value="{{ tranDate }}"/><br>
+        交易时间:<input type="text" name="tranTime" value="{{ tranTime }}"/><br>
+        打款账号:<input type="text" name="accountId" value="{{ accountId }}"/><br>
+        打款户名:<input type="text" name="accountName" value="{{ accountName }}"/><br>
+        打款银行:<input type="text" name="accountBank" value="{{ accountBank }}"/><br>
+        签名:<input type="text" name="signature" value="{{ signature }}"/><br>
+        网关类型:<input type="text" name="gateWayId" value="{{ gateWayId }}"/><br>
+        银行:<input type="text" name="bankId" value="{{ bankId }}"/><br>
+        支付成功前台跳转地址:<input type="text" name="trustFrontUrl" value="{{ trustFrontUrl }}" /><br>
+        支付成功后台通知地址:<input type="text" name="trustBackUrl" value="{{ trustBackUrl }}"/><br>
+
+        <input type="submit" value="提交支付">
+    </form>
+    <br>请求的签名串: [ {{ signString }} ] <br>
+</body>
+
+</html>

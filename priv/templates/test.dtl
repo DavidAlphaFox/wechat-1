@@ -1,0 +1,1 @@
+<html><body>Your favourite Smurf is {{ smurf_name }}.</body></html>
