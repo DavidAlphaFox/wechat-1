@@ -10,7 +10,8 @@
     cowboy,
     lager,
     erlydtl,
-    xfutils
+    xfutils,
+    mnesia
    ]},
   {env,[]},
   {modules, []},

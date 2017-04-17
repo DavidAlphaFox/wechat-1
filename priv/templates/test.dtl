@@ -1,1 +1,1 @@
-<html><body>Your favourite Smurf is {{ smurf_name }}.</body></html>
+<html><body><a href="/login/wechat">扫码登录网站{{aaa}}</a></body></html>

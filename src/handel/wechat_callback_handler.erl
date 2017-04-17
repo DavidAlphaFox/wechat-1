@@ -13,28 +13,51 @@ handle(Req, State) ->
   io:format("Code:~p~n",[Code]),
   {States, _Req} = cowboy_req:qs_val(<<"state">>, Req),
   io:format("States:~p~n",[States]),
-  {ok,Appid} = application:get_env(wechat,appid),
-  {ok,Secret} = application:get_env(wechat,secret),
-  %Access_token_Rui = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="++Appid++"&secret="++Secret++"&code="++binary_to_list(Code)++"&grant_type=authorization_code",
-  Access_token_Rui = "http://localhost:8081/sns/oauth2/access_token?appid="++Appid++"&secret="++Secret++"&code="++binary_to_list(Code)++"&grant_type=authorization_code",
-  Response=wechat_util:http_get(Access_token_Rui),
-  io:format("Result:~p~n",[Response]),
-  case check_access_token(Response) of
-      false->{error, Req, State};
-      {true,ACCESS_TOKEN,OPENID} ->
-        {ACCESS_TOKEN,OPENID},
-        %Userinfo_Url = "https://api.weixin.qq.com/sns/userinfo?access_token="++binary_to_list(ACCESS_TOKEN)++"&openid="++binary_to_list(OPENID),
-        Userinfo_Url = "http://localhost:8081/sns/userinfo?access_token="++binary_to_list(ACCESS_TOKEN)++"&openid="++binary_to_list(OPENID),
-        Userinfo=wechat_util:http_get(Userinfo_Url),
-        case check_userinfo(Userinfo) of
+  case Code of
+    undefined ->
+      {ok, Req2} = cowboy_req:reply(302, [
+        {<<"content-type">>, <<"text/plain">>},
+        {<<"location">>,<<"localhost:8080/wechat/login">>}
+      ], "", Req),
+      {ok, Req2, State};
+    _->
+      Response=wechat_login:get_access_token(Code),
+      io:format("Result:~p~n",[Response]),
+      case check_access_token(Response) of
+        false->{error, Req, State};
+        {true,[{<<"access_token">>,ACCESS_TOKEN},
+          {<<"expires_in">>,Expires_in},
+          {<<"refresh_token">>,REFRESH_TOKEN},
+          {<<"openid">>,OPENID},
+          {<<"scope">>,SCOPE}]} ->
+          %%保存用户信息到数据库
+          user_mnesia:add_user(OPENID , ACCESS_TOKEN , REFRESH_TOKEN , Expires_in),
+
+
+          Userinfo=wechat_login:get_userinfo(ACCESS_TOKEN,OPENID),
+          case check_userinfo(Userinfo) of
             false->{error, Req, State};
-            {true,Userinfo}->
-              {ok, Req2} = cowboy_req:reply(200, [
+            {true,[{<<"openid">>,OPENID},
+              {<<"nickname">>,Nickname},
+              {<<"sex">>,Sex},
+              {<<"province">>,Province},
+              {<<"city">>,City},
+              {<<"country">>,Country},
+              {<<"headimgurl">>,Headimgurl},
+              {<<"privilege">>,Privilege}]}->
+              [{user_info,OPENID,ACCESS_TOKEN,REFRESH_TOKEN,_Expires_in,ROLE,_Info}]=user_mnesia:find_user_by_openid(OPENID),
+              %%数据库里取角色
+              Payload = [{<<"openid">>,OPENID},{<<"role">>,ROLE}],
+              JWT = ejwt:encode(Payload, <<"secret">>),
+              Req2 = cowboy_req:set_resp_cookie(<<"jwt">>, JWT, [], Req),
+              {ok, Req3} = cowboy_req:reply(200, [
                 {<<"content-type">>, <<"text/plain">>}
-              ], jsx:encode(Userinfo), Req),
-              {ok, Req2, State}
-        end
-  end.
+              ], jsx:encode(Userinfo), Req2),
+              {ok, Req3, State}
+          end
+      end
+end.
+
 
 
 terminate(_Reason, Req, State) ->
@@ -48,9 +71,12 @@ check_access_token([{<<"access_token">>,ACCESS_TOKEN},
   {<<"expires_in">>,Expires_in},
   {<<"refresh_token">>,REFRESH_TOKEN},
   {<<"openid">>,OPENID},
-  {<<"scope">>,SCOPE},
-  {<<"unionid">>,UNIONID}])->
-  {true,ACCESS_TOKEN,OPENID}.
+  {<<"scope">>,SCOPE}])->
+  {true,[{<<"access_token">>,ACCESS_TOKEN},
+    {<<"expires_in">>,Expires_in},
+    {<<"refresh_token">>,REFRESH_TOKEN},
+    {<<"openid">>,OPENID},
+    {<<"scope">>,SCOPE}]}.
 
 check_userinfo([{<<"errcode">>,_},
   {<<"errmsg">>,_}])->
@@ -64,8 +90,7 @@ check_userinfo([{<<"openid">>,OPENID},
   {<<"city">>,City},
   {<<"country">>,Country},
   {<<"headimgurl">>,Headimgurl},
-  {<<"privilege">>,Privilege},
-  {<<"unionid">>,SCOPE}])->
+  {<<"privilege">>,Privilege}])->
   {true,[{<<"openid">>,OPENID},
     {<<"nickname">>,Nickname},
     {<<"sex">>,Sex},
@@ -73,5 +98,4 @@ check_userinfo([{<<"openid">>,OPENID},
     {<<"city">>,City},
     {<<"country">>,Country},
     {<<"headimgurl">>,Headimgurl},
-    {<<"privilege">>,Privilege},
-    {<<"unionid">>,SCOPE}]}.
+    {<<"privilege">>,Privilege}]}.
